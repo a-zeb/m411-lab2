@@ -1,34 +1,40 @@
 shoppingList = [];
 
-let removeLastItemButton = document.body.getElementById("removeLastItem");
-removeLastItemButton.addEventListener("click", removeLastItem());
+const ADD_ITEM_BUTTON = document.getElementById("addItemButton");
+ADD_ITEM_BUTTON.addEventListener("click", () => {
+  addItem();
+});
 
-let addItemButton = document.body.getElementById("addItemButton");
-addItemButton.addEventListener("click", addItem());
+const REMOVE_LAST_ITEM_BUTTON = document.getElementById("removeLastItem");
+REMOVE_LAST_ITEM_BUTTON.addEventListener("click", () => {
+  removeLastItem()
+});
 
-function initializeList() {
-  let shoppingListElement = document.body.getElementById("itemList");
+function displayList() {
+  let shoppingListElement = document.getElementById("itemList");
+  shoppingListElement.innerHTML = ""
   shoppingList.forEach((item) => {
-    let newListItemElement = document.body.createElement("li");
+    let newListItemElement = document.createElement("li");
     newListItemElement.textContent = item;
-    shoppingListElement.appendChild(listItem);
+    shoppingListElement.appendChild(newListItemElement);
   });
 }
 
 function addItem() {
-  let item = getElementById("addItemText").textContent;
-  if (shoppingList.includes(item)) {
+  let item = document.getElementById("addItemText").value;
+  if (shoppingList.includes(item) || item === "") {
     console.log("Item already exists");
+    window.alert("Item already exists")
   } else {
     shoppingList.push(item);
-    initializeList();
-    // let shoppingListElement = document.getElementById("itemList");
-    // let newListItemElement = document.createElement("li");
+    displayList();
+    document.getElementById("addItemText").value = ""
   }
 }
 
 function removeLastItem() {
   shoppingList.pop();
+  displayList()
 }
 
 function filterItems(searchTerm) {
@@ -36,10 +42,4 @@ function filterItems(searchTerm) {
     item.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return filtered;
-}
-
-function displayList() {
-  shoppingList.forEach((item) => {
-    console.log(item);
-  });
 }
